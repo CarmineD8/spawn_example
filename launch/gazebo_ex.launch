@@ -13,10 +13,10 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="$(arg ns1)/robot_description" 
-	 command="$(find xacro)/xacro --inorder $(find robot1_description)/urdf/robot2.xacro" />
+	 command="$(find xacro)/xacro --inorder $(find robot_urdf)/urdf/robot4.xacro" />
 
   <param name="$(arg ns2)/robot_description" 
-	 command="$(find xacro)/xacro --inorder $(find robot1_description)/urdf/robot2.xacro" />
+	 command="$(find xacro)/xacro --inorder $(find robot_urdf)/urdf/robot4.xacro" />
 
 
   <!-- launching the spawner and the controller for robot1 -->
