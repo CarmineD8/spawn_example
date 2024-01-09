@@ -8,8 +8,6 @@ Panels:
         - /Status1
         - /Grid1
         - /TF1
-        - /RobotModel1
-        - /RobotModel2
       Splitter Ratio: 0.446534663438797
     Tree Height: 805
   - Class: rviz/Selection
@@ -85,6 +83,8 @@ Visualization Manager:
           Value: true
         robot2_tf/odom:
           Value: true
+        world:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -103,13 +103,14 @@ Visualization Manager:
                 {}
           robot2_tf/map:
             robot2_tf/odom:
-              {}
-        robot2_tf/link_chassis:
-          robot2_tf/hokuyo_link:
-            {}
-          robot2_tf/link_left_wheel:
-            {}
-          robot2_tf/link_right_wheel:
+              robot2_tf/link_chassis:
+                robot2_tf/hokuyo_link:
+                  {}
+                robot2_tf/link_left_wheel:
+                  {}
+                robot2_tf/link_right_wheel:
+                  {}
+          world:
             {}
       Update Interval: 0
       Value: true
@@ -251,25 +252,99 @@ Visualization Manager:
       Draw Behind: false
       Enabled: true
       Name: Map
-      Topic: /robot1/map
+      Topic: /map_merge/merged_map
       Unreliable: false
       Use Timestamp: false
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /robot1/explore/frontiers
+      Name: MarkerArray
+      Namespaces:
+        frontiers: true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /robot2/explore/frontiers
+      Name: MarkerArray
+      Namespaces:
+        frontiers: true
+      Queue Size: 100
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
-      Enabled: true
+      Enabled: false
+      Name: Map
+      Topic: /robot1/map
+      Unreliable: false
+      Use Timestamp: false
+      Value: false
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: false
       Name: Map
       Topic: /robot2/map
       Unreliable: false
       Use Timestamp: false
+      Value: false
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /robot1/move_base/NavfnROS/plan
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /robot2/move_base/NavfnROS/plan
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: robot2_tf/link_chassis
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -293,7 +368,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10
+      Distance: 35.84380340576172
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -309,9 +384,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.785398006439209
+      Pitch: 0.7653982043266296
       Target Frame: <Fixed Frame>
-      Yaw: 0.785398006439209
+      Yaw: 0.917212963104248
     Saved: ~
 Window Geometry:
   Displays:

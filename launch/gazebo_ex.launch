@@ -102,7 +102,16 @@
       <param name="lasamplerange" value="0.005"/>
       <param name="lasamplestep" value="0.005"/>
     </node>
-	
+         <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	<!--<param name="base_global_planner" value="carrot_planner/CarrotPlanner" />-->
+	<!--<param name="base_global_planner" value="global_planner/GlobalPlanner" />-->
+    <rosparam file="$(find spawn_example)/param/costmap_common_params_1.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find spawn_example)/param/costmap_common_params_1.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find spawn_example)/param/local_costmap_params_1.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/global_costmap_params_1.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/base_local_planner_params_1.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/move_base_params_1.yaml" command="load"/>	
+  </node>  
   </group>
 
   <!-- launching the spawner and the controller for robot2 -->
@@ -146,10 +155,56 @@
       <param name="lasamplerange" value="0.005"/>
       <param name="lasamplestep" value="0.005"/>
     </node>
+    
+     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	<!--<param name="base_global_planner" value="carrot_planner/CarrotPlanner" />-->
+	<!--<param name="base_global_planner" value="global_planner/GlobalPlanner" />-->
+    <rosparam file="$(find spawn_example)/param/costmap_common_params_2.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find spawn_example)/param/costmap_common_params_2.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find spawn_example)/param/local_costmap_params_2.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/global_costmap_params_2.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/base_local_planner_params_2.yaml" command="load"/>
+    <rosparam file="$(find spawn_example)/param/move_base_params_2.yaml" command="load"/>
+  </node>
   </group> 
   
   <node pkg="tf" type="static_transform_publisher" name="robot_related_positions" args="0 0 0 0 0 0 /robot1_tf/map /robot2_tf/map 10" output="screen"/>
   
+  <node pkg="tf" type="static_transform_publisher" name="world_frame" args="-0.4 -0.4 0 0 0 0 /robot1_tf/map world 10" output="screen"/>
+  
+  <include file="$(find multirobot_map_merge)/launch/map_merge.launch"/>
+
+ <group ns="$(arg ns1)">
+  <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+  <param name="robot_base_frame" value="/robot1_tf/link_chassis"/>
+  <param name="costmap_topic" value="/map_merge/merged_map"/>
+  <param name="costmap_updates_topic" value="map_updates"/>
+  <param name="visualize" value="true"/>
+  <param name="planner_frequency" value="0.33"/>
+  <param name="progress_timeout" value="30.0"/>
+  <param name="potential_scale" value="3.0"/>
+  <param name="orientation_scale" value="0.0"/>
+  <param name="gain_scale" value="1.0"/>
+  <param name="transform_tolerance" value="0.3"/>
+  <param name="min_frontier_size" value="0.75"/>
+  </node>
+  </group>
+  
+  <group ns="$(arg ns2)">
+  <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+  <param name="robot_base_frame" value="/robot2_tf/link_chassis"/>
+  <param name="costmap_topic" value="/map_merge/merged_map"/>
+  <param name="costmap_updates_topic" value="map_updates"/>
+  <param name="visualize" value="true"/>
+  <param name="planner_frequency" value="0.33"/>
+  <param name="progress_timeout" value="30.0"/>
+  <param name="potential_scale" value="3.0"/>
+  <param name="orientation_scale" value="0.0"/>
+  <param name="gain_scale" value="1.0"/>
+  <param name="transform_tolerance" value="0.3"/>
+  <param name="min_frontier_size" value="0.75"/>
+  </node>
+  </group> 
   
 
 </launch>
